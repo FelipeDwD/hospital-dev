@@ -1,3 +1,4 @@
+using Hospital.WebApi.Application.Config;
 using Hospital.WebApi.Infra.Data.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,9 +29,8 @@ namespace Hospital.WebApi.Application
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-
-            services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(_configuration.GetConnectionString("Default")));
+            services.GetContextConfig(_configuration);
+            services.GetInjection();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

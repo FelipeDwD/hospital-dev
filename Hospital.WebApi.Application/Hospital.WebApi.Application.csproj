@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Hospital.WebApi.Infra.Data\Hospital.WebApi.Infra.Data.csproj" />
+    <ProjectReference Include="..\Hospital.WebApi.Service\Hospital.WebApi.Service.csproj" />
   </ItemGroup>
 
 
