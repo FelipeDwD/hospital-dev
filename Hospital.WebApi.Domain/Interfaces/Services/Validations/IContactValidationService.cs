@@ -2,7 +2,7 @@
 
 namespace Hospital.WebApi.Domain.Interfaces.Services.Validations
 {
-    public interface IUserValidationService : IValidationBaseService<UserModel>
+    public interface IContactValidationService : IValidationBaseService<ContactModel>
     {
     }
 }

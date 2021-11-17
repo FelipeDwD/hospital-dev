@@ -1,4 +1,4 @@
-﻿using Hospital.WebApi.Domain.Entities;
+﻿using Hospital.WebApi.Domain.Models;
 using Hospital.WebApi.Infra.Data.Map;
 using Microsoft.EntityFrameworkCore;
 
