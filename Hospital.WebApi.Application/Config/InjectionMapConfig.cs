@@ -1,5 +1,6 @@
 ﻿using Hospital.WebApi.Domain.Interfaces.Services.Validations;
 using Hospital.WebApi.Service.Services.Validations;
+using Hospital.WebApi.Service.Validations;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Hospital.WebApi.Application.Config
@@ -10,16 +11,15 @@ namespace Hospital.WebApi.Application.Config
                 services
                     .GetInjectionValidations()
                     .GetInjectionServices()
-                    .GetInjectionRepositories();            
+                    .GetInjectionRepositories();
+
+        private static IServiceCollection GetInjectionValidations(this IServiceCollection services) =>
+            services
+                .AddScoped<UserValidation>()
+                .AddScoped<ContactValidation>()
+                .AddScoped<IUserValidationService, UserValidationService>()
+                .AddScoped<IContactValidationService, ContactValidationService>();
         
-
-        private static IServiceCollection GetInjectionValidations(this IServiceCollection services)
-        {
-            services.AddScoped<IUserValidationService, UserValidationService>();
-            services.AddScoped<IContactValidationService, ContactValidationService>();
-            return services;
-        }
-
         private static IServiceCollection GetInjectionServices(this IServiceCollection services)
         {
             return services;

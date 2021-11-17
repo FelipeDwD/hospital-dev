@@ -30,6 +30,7 @@ namespace Hospital.WebApi.Application
             services.GetConfigCors();
             services.GetContextConfig(_configuration);
             services.GetInjection();
+            services.GetSwaggerConfig();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +49,9 @@ namespace Hospital.WebApi.Application
             {
                 endpoints.MapControllers();
             });
+
+            app.UseSwagger();
+            app.GetUseSwaggerUI();
         }
     }
 }
