@@ -27,6 +27,7 @@ namespace Hospital.WebApi.Application
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.GetConfigCors();
             services.GetContextConfig(_configuration);
             services.GetInjection();
         }
