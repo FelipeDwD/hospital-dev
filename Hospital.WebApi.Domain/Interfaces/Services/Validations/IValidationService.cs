@@ -1,4 +1,4 @@
-﻿using Hospital.WebApi.Domain.Entities;
+﻿using Hospital.WebApi.Domain.Models;
 using System.Collections.Generic;
 
 namespace Hospital.WebApi.Domain.Interfaces.Services.Validations
