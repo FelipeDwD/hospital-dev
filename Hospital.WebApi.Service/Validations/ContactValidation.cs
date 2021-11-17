@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using Hospital.WebApi.Domain.Entities;
+using Hospital.WebApi.Domain.Models;
 using System.Text.RegularExpressions;
 
 namespace Hospital.WebApi.Service.Validations
