@@ -2,7 +2,7 @@
 
 namespace Hospital.WebApi.Application.ViewModels
 {
-    public class UserViewModel
+    public class UserViewModel : BaseViewModel
     {
         public string Name { get; set; }
         public string Surname { get; set; }
