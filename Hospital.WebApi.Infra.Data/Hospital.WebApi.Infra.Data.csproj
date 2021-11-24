@@ -17,10 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Repository\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Hospital.WebApi.Domain\Hospital.WebApi.Domain.csproj" />
   </ItemGroup>
 
