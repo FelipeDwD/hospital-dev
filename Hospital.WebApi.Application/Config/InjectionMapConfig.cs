@@ -1,8 +1,10 @@
 ﻿using Hospital.WebApi.Domain.Interfaces.Repository;
 using Hospital.WebApi.Domain.Interfaces.Services;
+using Hospital.WebApi.Domain.Interfaces.Services.Email;
 using Hospital.WebApi.Domain.Interfaces.Services.Validations;
 using Hospital.WebApi.Infra.Data.Repository;
 using Hospital.WebApi.Service.Services;
+using Hospital.WebApi.Service.Services.Email;
 using Hospital.WebApi.Service.Services.Validations;
 using Hospital.WebApi.Service.Validations;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,7 +17,14 @@ namespace Hospital.WebApi.Application.Config
                 services
                     .GetInjectionValidations()
                     .GetInjectionServices()
-                    .GetInjectionRepositories();
+                    .GetInjectionRepositories()
+                    .GetEmailInjectionConfig();
+
+        public static IServiceCollection GetEmailInjectionConfig(this IServiceCollection services) =>
+            services
+                .AddScoped<IMailService, MailService>()
+                .AddScoped<IMailMessageService, MailMessageService>()
+                .AddScoped<ISmtpClientService, SmtpClientService>();
 
         private static IServiceCollection GetInjectionValidations(this IServiceCollection services) =>
             services
