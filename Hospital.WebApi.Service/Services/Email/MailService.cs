@@ -1,8 +1,6 @@
 ﻿using Hospital.WebApi.Domain.Interfaces.Services.Email;
 using Hospital.WebApi.Domain.Models.Email;
 using Microsoft.Extensions.Options;
-using System.Net;
-using System.Net.Mail;
 using System.Threading.Tasks;
 
 namespace Hospital.WebApi.Service.Services.Email
@@ -10,35 +8,23 @@ namespace Hospital.WebApi.Service.Services.Email
     public class MailService : IMailService
     {
         private readonly EmailSettings _mailSettings;
+        private readonly IMailMessageService _mailMessageService;
+        private readonly ISmtpClientService _smtpClientService;
 
-        public MailService(IOptions<EmailSettings> emailSettings) =>
+        public MailService(IOptions<EmailSettings> emailSettings,
+                           IMailMessageService mailMessageService,
+                           ISmtpClientService smtpClientService)
+        {
             _mailSettings = emailSettings.Value;
+            _mailMessageService = mailMessageService;
+            _smtpClientService = smtpClientService;
+        }            
 
-        public async Task SendEmailAsync(EmailRequest emailRequest) =>
-            await GetSmtpData()
-                    .SendMailAsync(GetMessageData(emailRequest));        
-
-        private MailMessage GetMessageData(EmailRequest emailRequest)
+        public async Task SendEmailAsync(EmailRequest emailRequest)
         {
-            var message = new MailMessage();
-            message.From = new MailAddress(_mailSettings.Mail, _mailSettings.DisplayName);
-            message.To.Add(new MailAddress(emailRequest.To));
-            message.Subject = emailRequest.Subject;
-            message.IsBodyHtml = true;
-            message.Body = null;
-            return message;
-        }
-
-        private SmtpClient GetSmtpData()
-        {
-            var smtp = new SmtpClient();
-            smtp.Port = _mailSettings.Port;
-            smtp.Host = _mailSettings.Host;
-            smtp.EnableSsl = true;
-            smtp.UseDefaultCredentials = false;
-            smtp.Credentials = new NetworkCredential(_mailSettings.Mail, _mailSettings.Password);
-            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-            return smtp;
-        }
+            var message = _mailMessageService.Get(emailRequest, _mailSettings);
+            var smtp = _smtpClientService.Get(_mailSettings);
+            await smtp.SendMailAsync(message);
+        }                  
     }
 }
