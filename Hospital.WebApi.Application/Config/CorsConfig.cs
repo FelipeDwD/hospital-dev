@@ -4,7 +4,7 @@ namespace Hospital.WebApi.Application.Config
 {
     public static class CorsConfig
     {
-        public static IServiceCollection GetConfigCors(this IServiceCollection services) =>
+        public static IServiceCollection GetCorsConfig(this IServiceCollection services) =>
             services.AddCors(options =>
             {
                 options.AddPolicy("Development",

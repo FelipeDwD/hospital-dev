@@ -11,7 +11,7 @@ namespace Hospital.WebApi.Application.Config
 {
     public static class InjectionMapConfig
     {
-        public static IServiceCollection GetInjection(this IServiceCollection services) =>
+        public static IServiceCollection GetInjectionConfig(this IServiceCollection services) =>
                 services
                     .GetInjectionValidations()
                     .GetInjectionServices()
