@@ -27,9 +27,10 @@ namespace Hospital.WebApi.Application
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.GetConfigCors();
+            services.GetCorsConfig();
             services.GetContextConfig(_configuration);
-            services.GetInjection();
+            services.GetInjectionConfig();
+            services.GetEmailConfig(_configuration);
             services.GetSwaggerConfig();
         }
 
