@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Text;
 using IHostingEnvironment = Microsoft.Extensions.Hosting.IHostingEnvironment;
 
 namespace Hospital.WebApi.Application
@@ -12,6 +13,7 @@ namespace Hospital.WebApi.Application
     {
 
         public IConfiguration _configuration { get; }
+        
         public Startup(IHostingEnvironment hostingEnvironment)
         {
             var builder = new ConfigurationBuilder()
@@ -20,7 +22,7 @@ namespace Hospital.WebApi.Application
                 .AddJsonFile($"appsettings.{hostingEnvironment.EnvironmentName}.json", true, true)
                 .AddEnvironmentVariables();
 
-            _configuration = builder.Build();
+            _configuration = builder.Build();            
         }       
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -32,6 +34,9 @@ namespace Hospital.WebApi.Application
             services.GetInjectionConfig();
             services.GetEmailConfig(_configuration);
             services.GetSwaggerConfig();
+            var key = _configuration.GetValue<string>("Jwt:Secret");
+            var securityKey = Encoding.ASCII.GetBytes(key);
+            services.GetJwtConfig(securityKey);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,16 +46,13 @@ namespace Hospital.WebApi.Application
             {
                 app.UseDeveloperExceptionPage();
             }
-
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
-
             app.UseSwagger();
             app.GetUseSwaggerUI();
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Hospital.WebApi.Domain.Models
 {
@@ -11,5 +12,6 @@ namespace Hospital.WebApi.Domain.Models
         public virtual LoginModel Login { get; set; }
         public Guid IdContact { get; set; }
         public virtual ContactModel Contact { get; set; }
+        public virtual List<UserRoleModel> UserRoles { get; set; }
     }
 }

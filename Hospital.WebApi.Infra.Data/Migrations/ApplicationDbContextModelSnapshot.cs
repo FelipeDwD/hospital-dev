@@ -19,7 +19,7 @@ namespace Hospital.WebApi.Infra.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Hospital.WebApi.Domain.Entities.ContactModel", b =>
+            modelBuilder.Entity("Hospital.WebApi.Domain.Models.ContactModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -40,7 +40,7 @@ namespace Hospital.WebApi.Infra.Data.Migrations
                     b.ToTable("Contact");
                 });
 
-            modelBuilder.Entity("Hospital.WebApi.Domain.Entities.LoginModel", b =>
+            modelBuilder.Entity("Hospital.WebApi.Domain.Models.LoginModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -61,7 +61,21 @@ namespace Hospital.WebApi.Infra.Data.Migrations
                     b.ToTable("Login");
                 });
 
-            modelBuilder.Entity("Hospital.WebApi.Domain.Entities.UserModel", b =>
+            modelBuilder.Entity("Hospital.WebApi.Domain.Models.RoleModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Role");
+                });
+
+            modelBuilder.Entity("Hospital.WebApi.Domain.Models.UserModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -97,17 +111,53 @@ namespace Hospital.WebApi.Infra.Data.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("Hospital.WebApi.Domain.Entities.UserModel", b =>
+            modelBuilder.Entity("Hospital.WebApi.Domain.Models.UserRoleModel", b =>
                 {
-                    b.HasOne("Hospital.WebApi.Domain.Entities.ContactModel", "Contact")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("IdRole")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("IdUser")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdRole");
+
+                    b.HasIndex("IdUser");
+
+                    b.ToTable("UserRole");
+                });
+
+            modelBuilder.Entity("Hospital.WebApi.Domain.Models.UserModel", b =>
+                {
+                    b.HasOne("Hospital.WebApi.Domain.Models.ContactModel", "Contact")
                         .WithOne("User")
-                        .HasForeignKey("Hospital.WebApi.Domain.Entities.UserModel", "IdContact")
+                        .HasForeignKey("Hospital.WebApi.Domain.Models.UserModel", "IdContact")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Hospital.WebApi.Domain.Entities.LoginModel", "Login")
+                    b.HasOne("Hospital.WebApi.Domain.Models.LoginModel", "Login")
                         .WithOne("User")
-                        .HasForeignKey("Hospital.WebApi.Domain.Entities.UserModel", "IdLogin")
+                        .HasForeignKey("Hospital.WebApi.Domain.Models.UserModel", "IdLogin")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Hospital.WebApi.Domain.Models.UserRoleModel", b =>
+                {
+                    b.HasOne("Hospital.WebApi.Domain.Models.RoleModel", "Role")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("IdRole")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Hospital.WebApi.Domain.Models.UserModel", "User")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("IdUser")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

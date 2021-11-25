@@ -13,6 +13,8 @@ namespace Hospital.WebApi.Infra.Data.Context
         public DbSet<ContactModel> Contact { get; set; }
         public DbSet<LoginModel> Login { get; set; }
         public DbSet<UserModel> User { get; set; }
+        public DbSet<UserRoleModel> UserRole { get; set; }
+        public DbSet<RoleModel> Role { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -20,6 +22,8 @@ namespace Hospital.WebApi.Infra.Data.Context
             modelBuilder.ApplyConfiguration(new ContactMap());
             modelBuilder.ApplyConfiguration(new LoginMap());
             modelBuilder.ApplyConfiguration(new UserMap());
+            modelBuilder.ApplyConfiguration(new UserRoleMap());
+            modelBuilder.ApplyConfiguration(new RoleMap());
         }
     }
 }
