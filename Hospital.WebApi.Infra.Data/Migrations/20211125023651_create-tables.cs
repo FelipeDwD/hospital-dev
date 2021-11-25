@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Hospital.WebApi.Infra.Data.Migrations
 {
-    public partial class first : Migration
+    public partial class createtables : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -34,6 +34,18 @@ namespace Hospital.WebApi.Infra.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Role",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Role", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
                 {
@@ -61,6 +73,31 @@ namespace Hospital.WebApi.Infra.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "UserRole",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    IdUser = table.Column<Guid>(nullable: false),
+                    IdRole = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserRole", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserRole_Role_IdRole",
+                        column: x => x.IdRole,
+                        principalTable: "Role",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserRole_User_IdUser",
+                        column: x => x.IdUser,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_User_IdContact",
                 table: "User",
@@ -72,10 +109,26 @@ namespace Hospital.WebApi.Infra.Data.Migrations
                 table: "User",
                 column: "IdLogin",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserRole_IdRole",
+                table: "UserRole",
+                column: "IdRole");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserRole_IdUser",
+                table: "UserRole",
+                column: "IdUser");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "UserRole");
+
+            migrationBuilder.DropTable(
+                name: "Role");
+
             migrationBuilder.DropTable(
                 name: "User");
 
