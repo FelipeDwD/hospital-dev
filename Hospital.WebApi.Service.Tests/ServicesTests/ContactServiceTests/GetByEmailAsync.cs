@@ -2,7 +2,6 @@
 using Hospital.WebApi.Domain.Models;
 using Hospital.WebApi.Service.Services;
 using Moq;
-using System;
 using Xunit;
 
 namespace Hospital.WebApi.Service.Tests.ServicesTests.ContactServiceTests
