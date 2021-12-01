@@ -15,7 +15,7 @@ namespace Hospital.WebApi.Service.Tests.ServicesTests.ContactServiceTests
             var email = "teste@gmail.com";
             var contactRepoReturn = new ContactModel()
             {
-                Email = "teste@gmail.com"
+                Email = "teste@gmail.com"   
             };
             var contactRepoMock = new Mock<IContactRepository>();
             contactRepoMock.Setup(x => x.GetByEmailAsync(email)).ReturnsAsync(contactRepoReturn);

@@ -14,12 +14,12 @@ namespace Hospital.WebApi.Application.Config
     public static class InjectionMapConfig
     {
         public static IServiceCollection GetInjectionConfig(this IServiceCollection services) =>
-                services
+                services                    
                     .GetTokenConfig()
                     .GetEmailConfig()
                     .GetValidationsConfig()
                     .GetServicesConfig()
-                    .GetRepositoriesConfig();                    
+                    .GetRepositoriesConfig();        
 
         private static IServiceCollection GetTokenConfig(this IServiceCollection services) =>
             services
