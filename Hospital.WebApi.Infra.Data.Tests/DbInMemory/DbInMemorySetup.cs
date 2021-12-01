@@ -1,5 +1,5 @@
-﻿using Hospital.WebApi.Domain.Models;
-using Hospital.WebApi.Infra.Data.Context;
+﻿using Hospital.WebApi.Infra.Data.Context;
+using Hospital.WebApi.Infra.Data.Tests.FakeData;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,7 +29,7 @@ namespace Hospital.WebApi.Infra.Data.Tests.DbInMemory
         {
             if(_dbContext.Database.EnsureCreated())
             {
-                _dbContext.Contact.Add(new ContactModel { Email = "teste@gmail.com", CellPhone = "(11) 90000-0000" });
+                _dbContext.Contact.AddRange(ContactFakeData.Get());
             }
             _dbContext.SaveChanges();
         }

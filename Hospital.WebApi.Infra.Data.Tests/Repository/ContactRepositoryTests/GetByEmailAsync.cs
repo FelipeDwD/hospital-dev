@@ -7,13 +7,24 @@ namespace Hospital.WebApi.Infra.Data.Tests.Repository.ContactRepositoryTests
         [Fact]
         public void ContactRepository_GetByEmailAsync_GivenExistingEmail_MustReturnTheContactWhoHasTheEmail()
         {
-            //Arranje
+            //Arrange
             var email = "teste@gmail.com";
             //Act
             var actual = _repository.GetByEmailAsync(email);
             //Assert
             Assert.NotNull(actual);
             Assert.Equal(email, actual.Result.Email);
+        }
+
+        [Fact]
+        public void ContactRepository_GetByEmailAsync_GivenNonExistentEmail_MustReturnNull()
+        {
+            //Arrange
+            var email = "emailinexistente@gmail.com";
+            //Act
+            var actual = _repository.GetByEmailAsync(email);
+            //Assert
+            Assert.Null(actual.Result);            
         }
     }
 }

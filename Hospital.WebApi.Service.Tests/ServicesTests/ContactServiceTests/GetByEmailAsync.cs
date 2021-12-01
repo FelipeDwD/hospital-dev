@@ -27,5 +27,24 @@ namespace Hospital.WebApi.Service.Tests.ServicesTests.ContactServiceTests
             Assert.NotNull(contact);
             Assert.Equal(email, contact.Result.Email);
         }
+
+        [Fact]
+        public void ContactService_GetByEmailAsync_GivenNonExistingEmail_MustReturnNull()
+        {
+            //Arrange
+            var email = "teste@gmail.com";
+            var contactRepoReturn = new ContactModel()
+            {
+                Email = "outroemail@gmail.com"
+            };
+            var contactRepoMock = new Mock<IContactRepository>();
+            contactRepoMock.Setup(x => x.GetByEmailAsync(email)).ReturnsAsync(contactRepoReturn);
+            var contactService = new ContactService(contactRepoMock.Object);
+            //Act
+            var contact = contactService.GetByEmailAsync(email);
+            //Assert
+            contactRepoMock.Verify(x => x.GetByEmailAsync(email), Times.Once);
+            Assert.False(contact.Result.Email == email);
+        }
     }
 }
