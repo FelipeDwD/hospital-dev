@@ -10,6 +10,6 @@ namespace Hospital.WebApi.Infra.Data.Repository
             : base(applicationDbContext)
         {
 
-        }
+        }      
     }
 }
