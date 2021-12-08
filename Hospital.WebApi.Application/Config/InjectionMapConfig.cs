@@ -14,37 +14,31 @@ namespace Hospital.WebApi.Application.Config
     public static class InjectionMapConfig
     {
         public static IServiceCollection GetInjectionConfig(this IServiceCollection services) =>
-                services                    
-                    .GetTokenConfig()
-                    .GetEmailConfig()
+                services                                        
                     .GetValidationsConfig()
                     .GetServicesConfig()
-                    .GetRepositoriesConfig();        
+                    .GetRepositoriesConfig();               
 
-        private static IServiceCollection GetTokenConfig(this IServiceCollection services) =>
-            services
-                .AddScoped<ITokenService, TokenService>()
-                .AddScoped<ITokenDescriptorService, TokenDescriptorService>()
-                .AddScoped<IClaimService, ClaimService>();
-
-        private static IServiceCollection GetEmailConfig(this IServiceCollection services) =>
-            services
-                .AddScoped<IMailService, MailService>()
-                .AddScoped<IMailMessageService, MailMessageService>()
-                .AddScoped<ISmtpClientService, SmtpClientService>();
 
         private static IServiceCollection GetValidationsConfig(this IServiceCollection services) =>
             services
                 .AddScoped<UserValidation>()
-                .AddScoped<ContactValidation>()
-                .AddScoped<IUserValidationService, UserValidationService>()
-                .AddScoped<IContactValidationService, ContactValidationService>();
+                .AddScoped<ContactValidation>();                
 
         private static IServiceCollection GetServicesConfig(this IServiceCollection services) =>
             services
              .AddScoped<IUserService, UserService>()
              .AddScoped<ILoginService, LoginService>()
-             .AddScoped<IContactService, ContactService>();
+             .AddScoped<IContactService, ContactService>()
+             .AddScoped<IMailService, MailService>()
+             .AddScoped<IMailMessageService, MailMessageService>()
+             .AddScoped<ISmtpClientService, SmtpClientService>()
+             .AddScoped<IUserValidationService, UserValidationService>()
+             .AddScoped<IContactValidationService, ContactValidationService>()
+             .AddScoped<ITokenService, TokenService>()
+             .AddScoped<ITokenDescriptorService, TokenDescriptorService>()
+             .AddScoped<IClaimService, ClaimService>()
+             .AddScoped<IDddService, DddService>();
 
         private static IServiceCollection GetRepositoriesConfig(this IServiceCollection services) =>
             services

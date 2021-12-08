@@ -6,5 +6,6 @@ namespace Hospital.WebApi.Domain.Interfaces.Services
     public interface IContactService : IBaseService<ContactModel>
     {
         Task<ContactModel> GetByEmailAsync(string email);
+        Task<ContactModel> GetByCellPhoneAsync(string cellPhone);
     }
 }

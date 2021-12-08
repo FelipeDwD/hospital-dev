@@ -14,6 +14,9 @@ namespace Hospital.WebApi.Service.Services
             _contactRepository = contactRepository;
         }
 
+        public async Task<ContactModel> GetByCellPhoneAsync(string cellPhone) =>
+            await _contactRepository.GetByCellPhoneAsync(cellPhone);        
+
         public async Task<ContactModel> GetByEmailAsync(string email) =>
             await _contactRepository.GetByEmailAsync(email);        
     }
