@@ -97,5 +97,31 @@ namespace Hospital.WebApi.Service.Tests.ValidationTests.ContactValidationTests
             //Assert
             Assert.False(response);
         }        
+
+        [Fact]
+        public void ContactValidation_IsCellPhoneValid_GivenCellPhoneWithOneLessNumberInTheFirstPart_MustReturnFalse()
+        {
+            //Arrange
+            var cellPhone = "(11)9000-0000";
+            var dddServiceMock = new Mock<IDddService>();
+            var contactValidation = new ContactValidation(dddServiceMock.Object);
+            //Act
+            var response = contactValidation.IsCellPhoneValid(cellPhone);
+            //Assert
+            Assert.False(response);
+        }
+
+        [Fact]
+        public void ContactValidation_IsCellPhoneValid_GivenCellPhoneWithOneLessNumberInTheSecondPart_MustReturnFalse()
+        {
+            //Arrange
+            var cellPhone = "(11)90000-000";
+            var dddServiceMock = new Mock<IDddService>();
+            var contactValidation = new ContactValidation(dddServiceMock.Object);
+            //Act
+            var response = contactValidation.IsCellPhoneValid(cellPhone);
+            //Assert
+            Assert.False(response);
+        }
     }
 }
