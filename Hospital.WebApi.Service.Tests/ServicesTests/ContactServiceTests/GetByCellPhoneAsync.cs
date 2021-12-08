@@ -23,7 +23,7 @@ namespace Hospital.WebApi.Service.Tests.ServicesTests.ContactServiceTests
             //Act
             var contact = contactService.GetByCellPhoneAsync(cellPhone);
             //Assert
-            contactRepoMock.Verify(x => x.GetByEmailAsync(cellPhone), Times.Once);
+            contactRepoMock.Verify(x => x.GetByCellPhoneAsync(cellPhone), Times.Once);
             Assert.NotNull(contact);
             Assert.Equal(cellPhone, contact.Result.CellPhone);
         }
@@ -44,7 +44,7 @@ namespace Hospital.WebApi.Service.Tests.ServicesTests.ContactServiceTests
             var contact = contactService.GetByCellPhoneAsync(cellPhone);
             //Assert
             contactRepoMock.Verify(x => x.GetByCellPhoneAsync(cellPhone), Times.Once);
-            Assert.Null(contact);
+            Assert.False(cellPhone == contact.Result.CellPhone);
         }
     }
 }
