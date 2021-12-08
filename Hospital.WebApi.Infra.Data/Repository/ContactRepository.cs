@@ -14,6 +14,9 @@ namespace Hospital.WebApi.Infra.Data.Repository
 
         }
 
+        public async Task<ContactModel> GetByCellPhoneAsync(string cellPhone) =>
+            await _dbSet.FirstOrDefaultAsync(x => x.CellPhone == cellPhone);        
+
         public async Task<ContactModel> GetByEmailAsync(string email) =>
             await _dbSet.FirstOrDefaultAsync(x => x.Email == email);       
     }
